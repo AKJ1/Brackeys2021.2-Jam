@@ -11,10 +11,10 @@ on:
       - 'deploy'
     tags: 
       - v1.*
+  workflow_dispatch: {}
 
 jobs:
   build:
-
     name: Build my project ✨
     runs-on: ubuntu-latest
     steps:
