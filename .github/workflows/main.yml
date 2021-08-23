@@ -1,6 +1,16 @@
 name: Actions 😎
 
-on: [push, pull_request]
+on: 
+  push:
+    branches:
+      - 'deploy'
+    tags: 
+      - v1.*
+  pull_request:
+    branches:
+      - 'deploy'
+    tags: 
+      - v1.*
 
 jobs:
   build:
@@ -21,13 +31,13 @@ jobs:
           restore-keys: |
             Library-
 
-      # Test
-      - name: Run tests
-        uses: game-ci/unity-test-runner@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+      # Test - NO TESTS, FUCK TESTS, ALL MY HOMIES HATE TESTING.
+      # - name: Run tests
+      #   uses: game-ci/unity-test-runner@v2
+      #   env:
+      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      #   with:
+      #     githubToken: ${{ secrets.GITHUB_TOKEN }}
 
       # Build
       - name: Build project
