@@ -63,4 +63,4 @@ jobs:
             CHANNEL: unity-webgl
             ITCH_GAME: regular-trip-to-the-shop
             ITCH_USER: ace777
-            PACKAGE: build/windows
+            PACKAGE: build/WebGL
