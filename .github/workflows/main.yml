@@ -53,3 +53,14 @@ jobs:
         with:
           name: Build
           path: build
+
+
+
+      - name: Butler Push
+        uses: josephbmanley/butler-publish-itchio-action@v1.0.2
+        env:
+            BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+            CHANNEL: unity-webgl
+            ITCH_GAME: regular-trip-to-the-shop
+            ITCH_USER: ace777
+            PACKAGE: build/windows
