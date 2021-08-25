@@ -20,12 +20,13 @@ public class PlayerController : MonoBehaviour
 
     public float pastMagnitude;
 
+    private float motionDecay;
+    private float movementMagnitude;
+
     void FixedUpdate()
     {
         var currentVelocity = rigidbody.velocity;
-        var motionDecay = rigidbody.drag * Time.deltaTime;
-        var input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        rigidbody.velocity = (currentVelocity * (1- motionDecay)) +  playerForward.forward * (playerSpeed * input.y * Time.deltaTime);
+        rigidbody.velocity =(currentVelocity * (1 - motionDecay)) +  playerForward.forward * movementMagnitude;
         // rigidbody.AddForce(playerForward.forward * (playerSpeed * input.y), ForceMode.Force);
         // rigidbody.AddTorque(rigidbody.transform.right * , ForceMode.Force);
 
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         var input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        motionDecay = rigidbody.drag * Time.deltaTime;
+        movementMagnitude = (playerSpeed * input.y * Time.fixedDeltaTime);
         rigidbody.MoveRotation(rigidbody.transform.rotation * Quaternion.AngleAxis((playerRotationSpeed * input.x * Time.deltaTime), rigidbody.transform.up));
     }
 }
