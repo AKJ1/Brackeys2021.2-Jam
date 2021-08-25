@@ -11,17 +11,30 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
 
+
     public Transform playerForward;
     public float playerSpeed = 10.0f;
     public float playerRotationSpeed = 10.0f;
 
+    public Vector3 pastVelocity;
+
+    public float pastMagnitude;
+
+    void FixedUpdate()
+    {
+        var currentVelocity = rigidbody.velocity;
+        var motionDecay = rigidbody.drag * Time.deltaTime;
+        var input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        rigidbody.velocity = (currentVelocity * (1- motionDecay)) +  playerForward.forward * (playerSpeed * input.y * Time.deltaTime);
+        // rigidbody.AddForce(playerForward.forward * (playerSpeed * input.y), ForceMode.Force);
+        // rigidbody.AddTorque(rigidbody.transform.right * , ForceMode.Force);
+
+        pastVelocity = rigidbody.velocity;
+    }
 
     void Update()
     {
         var input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        rigidbody.velocity = playerForward.forward * (playerSpeed * input.y);
-        // rigidbody.AddForce(playerForward.forward * (playerSpeed * input.y), ForceMode.Force);
         rigidbody.MoveRotation(rigidbody.transform.rotation * Quaternion.AngleAxis((playerRotationSpeed * input.x * Time.deltaTime), rigidbody.transform.up));
-        // rigidbody.AddTorque(rigidbody.transform.right * , ForceMode.Force);
     }
 }
