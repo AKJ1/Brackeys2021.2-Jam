@@ -12,6 +12,8 @@ public class CameraFollower : MonoBehaviour
 
     [Range(0.05f, 5f)]
     public float DampMoveTime = 0.5f;
+
+    private Vector3 targetPosition;
     
     void FixedUpdate()
     {
@@ -21,12 +23,20 @@ public class CameraFollower : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        if (Target != null) 
+        {
+            transform.position  = targetPosition;
+        }
+    }
+
     private void FollowTarget()
     {
         Vector3 delta = CalculateDelta();
         var pos = transform.position;
         Vector3 newPos = Vector3.SmoothDamp(pos, pos + delta, ref dampVelocity, DampMoveTime);
-        transform.position = newPos;
+        targetPosition = newPos;
     }
 
     private Vector3 CalculateDelta()
