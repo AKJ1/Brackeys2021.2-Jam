@@ -6,32 +6,22 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public PathCreator pathCreator;
-    public CharacterController controller;
+    public Rigidbody rigidbody;
 
     private Vector3 playerVelocity;
     private bool groundedPlayer;
-    private float playerSpeed = 10.0f;
-    private float gravityValue = -9.81f;
+
+    public Transform playerForward;
+    public float playerSpeed = 10.0f;
+    public float playerRotationSpeed = 10.0f;
 
 
     void Update()
     {
-        groundedPlayer = controller.isGrounded;
-        if (groundedPlayer && playerVelocity.y < 0)
-        {
-            playerVelocity.y = 0f;
-        }
-
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        controller.Move(move * Time.deltaTime * playerSpeed);
-
-        if (move != Vector3.zero)
-        {
-            gameObject.transform.forward = move;
-        }
-
-
-        playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
+        var input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        rigidbody.velocity = playerForward.forward * (playerSpeed * input.y);
+        // rigidbody.AddForce(playerForward.forward * (playerSpeed * input.y), ForceMode.Force);
+        rigidbody.MoveRotation(rigidbody.transform.rotation * Quaternion.AngleAxis((playerRotationSpeed * input.x * Time.deltaTime), rigidbody.transform.up));
+        // rigidbody.AddTorque(rigidbody.transform.right * , ForceMode.Force);
     }
 }
