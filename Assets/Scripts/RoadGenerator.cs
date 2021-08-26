@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class RoadGenerator : MonoBehaviour
@@ -34,8 +36,16 @@ public class RoadGenerator : MonoBehaviour
     private void InitializeChunk()
     {
         currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/2"));
-        var absoluteMovement = transformPlayer.position - currentChunk.start.position;
-        currentChunk.transform.position = absoluteMovement; //new Vector3(absoluteMovement.x, 0, absoluteMovement.z);
+        var relativeMovement = transformPlayer.position - currentChunk.start.position;
+        Bounds b = new Bounds();
+        var allbounds = transformPlayer.GetComponentsInChildren<Renderer>().Select(r => r.bounds.size);
+        foreach (var bound in allbounds)
+        {
+            b.Encapsulate(bound);
+        }
+        var playerOffset = new Vector3(0,b.size.y*1.5f,0);
+        
+        currentChunk.transform.position += relativeMovement - playerOffset; //new Vector3(absoluteMovement.x, 0, absoluteMovement.z);
         previousChunk = currentChunk;
     }
 
@@ -49,13 +59,14 @@ public class RoadGenerator : MonoBehaviour
     {
         currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/2"));
         var absoluteMovement = previousChunk.end.position -  currentChunk.start.position;
-        if (previousChunk != null)
-        {
-            Debug.DrawLine(previousChunk.end.transform.position, previousChunk.start.transform.position, Color.cyan,
-                100);
-            Debug.DrawLine(currentChunk.end.transform.position, currentChunk.start.transform.position, Color.cyan, 100);
-            Debug.DrawLine(previousChunk.end.transform.position, currentChunk.start.transform.position, Color.red, 100);
-        }
+        // if (previousChunk != null)
+        // {
+        //     Debug.DrawLine(previousChunk.end.transform.position, previousChunk.start.transform.position, Color.cyan,
+        //         100);
+        //     Debug.DrawLine(currentChunk.end.transform.position, currentChunk.start.transform.position, Color.cyan, 100);
+        //     Debug.DrawLine(previousChunk.end.transform.position, currentChunk.start.transform.position, Color.red, 100);
+        // }
+        
         currentChunk.transform.position += absoluteMovement;
         previousChunk = currentChunk;
     }
