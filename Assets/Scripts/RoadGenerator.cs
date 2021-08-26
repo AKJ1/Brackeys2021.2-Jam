@@ -35,7 +35,7 @@ public class RoadGenerator : MonoBehaviour
 
     private void InitializeChunk()
     {
-        currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/2"));
+        currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/3"));
         var relativeMovement = transformPlayer.position - currentChunk.start.position;
         Bounds b = new Bounds();
         var allbounds = transformPlayer.GetComponentsInChildren<Renderer>().Select(r => r.bounds.size);
@@ -57,7 +57,7 @@ public class RoadGenerator : MonoBehaviour
 
     private void UpdateChunk()
     {
-        currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/2"));
+        currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/3"));
         var absoluteMovement = previousChunk.end.position -  currentChunk.start.position;
         // if (previousChunk != null)
         // {
