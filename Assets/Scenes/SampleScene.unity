@@ -1110,7 +1110,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 860713739}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 5
   m_Drag: 0.2
   m_AngularDrag: 0.2
   m_UseGravity: 0
@@ -1139,7 +1139,7 @@ HingeJoint:
   m_UseMotor: 0
   m_Motor:
     targetVelocity: 0
-    force: 100
+    force: 50
     freeSpin: 1
   m_UseLimits: 1
   m_Limits:
@@ -1718,7 +1718,7 @@ HingeJoint:
   m_UseMotor: 0
   m_Motor:
     targetVelocity: 0
-    force: 100
+    force: 50
     freeSpin: 1
   m_UseLimits: 1
   m_Limits:

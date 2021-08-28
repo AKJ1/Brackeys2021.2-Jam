@@ -6,9 +6,11 @@ using UnityEngine;
 
 public class RoadGenerator : MonoBehaviour
 {
+    private const int MaxChunkCount = 30;
     public Transform transformPlayer;
     private RoadChunk previousChunk;
     private RoadChunk currentChunk;
+    private List<RoadChunk> chunks = new List<RoadChunk>();
 
     private void Start ()
     {
@@ -17,10 +19,10 @@ public class RoadGenerator : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            UpdateChunk();
-        }
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+        //    UpdateChunk();
+        //}
         
         if (transformPlayer==null || previousChunk == null)
         {
@@ -30,12 +32,22 @@ public class RoadGenerator : MonoBehaviour
         if (Vector3.Distance(transformPlayer.transform.position, previousChunk.end.position) < 25)
         {
             UpdateChunk();
+            
+            Debug.Log("You've passed" + (100 * chunks.Count) + "meters!");
         }
+
+        //not working
+        if (MaxChunkCount <= chunks.Count && (Vector3.Distance(transformPlayer.transform.position, previousChunk.end.position) <= 5))
+        {
+            Debug.Log("You won!");
+        }
+
     }
 
     private void InitializeChunk()
     {
-        currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/3"));
+        currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/2"));
+        chunks.Add(currentChunk);
         var relativeMovement = transformPlayer.position - currentChunk.start.position;
         Bounds b = new Bounds();
         var allbounds = transformPlayer.GetComponentsInChildren<Renderer>().Select(r => r.bounds.size);
@@ -57,7 +69,8 @@ public class RoadGenerator : MonoBehaviour
 
     private void UpdateChunk()
     {
-        currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/3"));
+        currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/2"));
+        chunks.Add(currentChunk);
         var absoluteMovement = previousChunk.end.position -  currentChunk.start.position;
         // if (previousChunk != null)
         // {
@@ -69,5 +82,7 @@ public class RoadGenerator : MonoBehaviour
         
         currentChunk.transform.position += absoluteMovement;
         previousChunk = currentChunk;
+
+       
     }
 }
