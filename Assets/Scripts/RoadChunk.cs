@@ -9,14 +9,10 @@ public class RoadChunk : MonoBehaviour
     public Transform roadChunk;
     public Transform transformRoad;
     private MeshCollider roadMeshCollider;
-
-    public float startDistance = 10;
-    public float yDistance = 100;
-    public float minSpread = 5;
-    public float maxSpread = 10;
+   
     public int numPoints = 100;
     private float boundingBoxScale = 1f;
-    private Vector3 pointRandom;
+    private Vector3 randomPoint;
     private Vector3 pointOnRoad = Vector3.zero;
     private bool pointFound = false;
     private int indexPoints = 0;
@@ -37,12 +33,12 @@ public class RoadChunk : MonoBehaviour
                 break;
             }
 
-            pointRandom = new Vector3(
+            randomPoint = new Vector3(
             Random.Range(roadMeshCollider.bounds.min.x * boundingBoxScale, roadMeshCollider.bounds.max.x * boundingBoxScale),
             Random.Range(roadMeshCollider.bounds.min.y * boundingBoxScale, roadMeshCollider.bounds.max.y * boundingBoxScale),
             Random.Range(roadMeshCollider.bounds.min.z * boundingBoxScale, roadMeshCollider.bounds.max.z * boundingBoxScale));
          
-            GetRandomPointOnColliderSurface(pointRandom, pointOnRoad);
+            GetRandomPointOnColliderSurface(randomPoint, pointOnRoad);
 
             if (pointFound)
             {
