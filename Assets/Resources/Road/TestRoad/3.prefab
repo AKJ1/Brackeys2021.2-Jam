@@ -61,6 +61,16 @@ MonoBehaviour:
   start: {fileID: 7076431734959322333}
   end: {fileID: 3398128875451498000}
   roadChunk: {fileID: 7983469286453023161}
+  roadMeshCollider: {fileID: 2865333465947161328}
+  startDistance: 10
+  yDistance: 100
+  minSpread: 5
+  maxSpread: 10
+  surfaceHigh: 1
+  numPoints: 100
+  maxIterations: 1000
+  scalePrimitives: {x: 2, y: 2, z: 2}
+  colorPrimitives: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &8380079440921590288
 PrefabInstance:
   m_ObjectHideFlags: 0
