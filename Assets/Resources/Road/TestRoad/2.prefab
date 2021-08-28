@@ -15,6 +15,14 @@ MonoBehaviour:
   start: {fileID: 5117377651074069352}
   end: {fileID: 5739236870581719301}
   roadChunk: {fileID: 2807800773005981926}
+  transformRoad: {fileID: 5875201265093788454}
+  startDistance: 10
+  yDistance: 100
+  minSpread: 5
+  maxSpread: 10
+  numPoints: 100
+  maxIterations: 1000
+  scaleSpheres: {x: 2, y: 2, z: 2}
 --- !u!64 &1633574790
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -104,7 +112,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4afb41d98f46a514b97105eadf2c8ca5,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4afb41d98f46a514b97105eadf2c8ca5, type: 3}
@@ -135,6 +143,12 @@ Transform:
 --- !u!1 &5010406601375195695 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1948514023681655518, guid: 4afb41d98f46a514b97105eadf2c8ca5,
+    type: 3}
+  m_PrefabInstance: {fileID: 2413356074845069069}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5875201265093788454 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1083926066013365205, guid: 4afb41d98f46a514b97105eadf2c8ca5,
     type: 3}
   m_PrefabInstance: {fileID: 2413356074845069069}
   m_PrefabAsset: {fileID: 0}

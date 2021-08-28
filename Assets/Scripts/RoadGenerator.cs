@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class RoadGenerator : MonoBehaviour
 {
+    private const int MaxChunkCount = 30;
     public Transform transformPlayer;
     private RoadChunk previousChunk;
     private RoadChunk currentChunk;
+    private List<RoadChunk> chunks = new List<RoadChunk>();
+   
 
     private void Start ()
     {
@@ -17,10 +21,10 @@ public class RoadGenerator : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            UpdateChunk();
-        }
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+        //    UpdateChunk();
+        //}
         
         if (transformPlayer==null || previousChunk == null)
         {
@@ -30,12 +34,22 @@ public class RoadGenerator : MonoBehaviour
         if (Vector3.Distance(transformPlayer.transform.position, previousChunk.end.position) < 25)
         {
             UpdateChunk();
+            
+            Debug.Log("You've passed" + (100 * chunks.Count) + "meters!");
         }
+
+        //not working
+        if (MaxChunkCount <= chunks.Count && (Vector3.Distance(transformPlayer.transform.position, previousChunk.end.position) <= 5))
+        {
+            Debug.Log("You won!");
+        }
+
     }
 
     private void InitializeChunk()
     {
-        currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/2"));
+        currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/4"));
+        chunks.Add(currentChunk);
         var relativeMovement = transformPlayer.position - currentChunk.start.position;
         Bounds b = new Bounds();
         var allbounds = transformPlayer.GetComponentsInChildren<Renderer>().Select(r => r.bounds.size);
@@ -46,7 +60,9 @@ public class RoadGenerator : MonoBehaviour
         var playerOffset = new Vector3(0,b.size.y*1.5f,0);
         
         currentChunk.transform.position += relativeMovement - playerOffset; //new Vector3(absoluteMovement.x, 0, absoluteMovement.z);
+        currentChunk.gameObject.SetActive(true);
         previousChunk = currentChunk;
+        previousChunk.gameObject.SetActive(true);
     }
 
     // private void PositionChunk(RoadChunk first, RoadChunk second)
@@ -57,7 +73,7 @@ public class RoadGenerator : MonoBehaviour
 
     private void UpdateChunk()
     {
-        currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/2"));
+        currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/4"));
         var absoluteMovement = previousChunk.end.position -  currentChunk.start.position;
         // if (previousChunk != null)
         // {
@@ -68,6 +84,12 @@ public class RoadGenerator : MonoBehaviour
         // }
         
         currentChunk.transform.position += absoluteMovement;
+        //GenerateObstacles();
         previousChunk = currentChunk;
+        chunks.Add(previousChunk);
+
+       
+        previousChunk.gameObject.SetActive(true);
+
     }
 }
