@@ -9,7 +9,7 @@ public class BoosterObstacle : MonoBehaviour
     {
         if (col.transform.CompareTag("Player"))
         {
-            GameController.instance.IncreasePlayerSpeed();
+            GameController.instance.DecreasePlayerSpeed();
             gameObject.SetActive(false);
         }
     }

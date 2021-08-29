@@ -47,29 +47,17 @@ public class SwitchDestructable : MonoBehaviour
         yield return new WaitForEndOfFrame();
         foreach (var cp in collisionPoints)
         {
-            Physics.OverlapSphereNonAlloc(cp, 1, this.hitObjects);
+            Physics.OverlapSphereNonAlloc(cp, 10, this.hitObjects);
             foreach (var obj in hitObjects)
             {
                 if (obj != null)
                 {
                     if (obj.attachedRigidbody != null)
                     {
-                        obj.attachedRigidbody.AddExplosionForce(impactMagnitude, cp, 1);
+                        obj.attachedRigidbody.AddExplosionForce(200, cp, 10);
                     }
                 }
             }
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

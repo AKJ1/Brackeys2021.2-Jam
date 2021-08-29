@@ -19,17 +19,10 @@ public class RoadChunk : MonoBehaviour
     private int indexPoints = 0;
     private RaycastHit hit;
 
-
-    //private void Start()
-    //{
-    //    UpdateBuildings();
-    //}
-
     void OnEnable()
     {
         roadMeshCollider = transformRoad.GetComponent<MeshCollider>();
         GenerateRandomPositions();
-        //UpdateBuildings();
     }
 
     void GenerateRandomPositions()
@@ -87,18 +80,4 @@ public class RoadChunk : MonoBehaviour
 
         pointSurface = pointOnRoad;
     }
-
-    public void UpdateBuildings()
-    {
-        Debug.Log(destructables.Count);
-        if (destructables.Count != 0)
-        {
-            for (int i = 0; i < destructables.Count; i++)
-            {
-                Debug.Log(i);
-                destructables[i].onCollisionEnter = GameController.instance.DecreasePlayerSpeed;
-            }
-        }
-    }
-
 }
