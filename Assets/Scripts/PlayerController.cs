@@ -71,8 +71,5 @@ public class PlayerController : MonoBehaviour
         currentStability = Mathf.Clamp01(currentStability);
         currentTraction = Mathf.Lerp(minTraction, maxTraction, currentStability);
         rigidbody.MoveRotation(newRotation);
-        
-        
-        
     }
 }
