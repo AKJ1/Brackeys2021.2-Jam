@@ -46,6 +46,7 @@ public class RoadChunk : MonoBehaviour
                 //Transform cubeTransform = Instantiate(Resources.Load<Transform>("Obstacles/Cube"));
                 //cubeTransform.position = pointOnRoad;
                 //cubeTransform.localScale = new Vector3(2f, 2f, 2f);
+                //GameObject sphere = GameObject.CreatePrimitive((PrimitiveType)Random.Range(0, 3));
                 GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 sphere.transform.position = pointOnRoad;
                 sphere.transform.localScale = new Vector3(2f, 2f, 2f);
@@ -75,4 +76,10 @@ public class RoadChunk : MonoBehaviour
 
         pointSurface = pointOnRoad;
     }
+
+    //public void AddBuildboard()
+    //{
+    //    Transform pos = Instantiate(Resources.Load<Transform>("Obstacles/Cube"));
+    //    pos.position = start.position;
+    //}
 }

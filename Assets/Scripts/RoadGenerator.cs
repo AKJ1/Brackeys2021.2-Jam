@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class RoadGenerator : MonoBehaviour
 {
-    private const int MaxChunkCount = 30;
+    private const int MaxChunkCount = 3;
     public Transform transformPlayer;
     private RoadChunk previousChunk;
     private RoadChunk currentChunk;
@@ -31,17 +31,25 @@ public class RoadGenerator : MonoBehaviour
             return;
         }
 
+
         if (Vector3.Distance(transformPlayer.transform.position, previousChunk.end.position) < 25)
         {
             UpdateChunk();
-            
-            Debug.Log("You've passed" + (100 * chunks.Count) + "meters!");
-        }
 
-        //not working
-        if (MaxChunkCount <= chunks.Count && (Vector3.Distance(transformPlayer.transform.position, previousChunk.end.position) <= 5))
-        {
-            Debug.Log("You won!");
+            if (MaxChunkCount > chunks.Count)
+            {
+                RoadLabel metersCount = Instantiate(Resources.Load<RoadLabel>("Texts/MetersCounter"));
+                metersCount.transformRoadLabel.position = new Vector3(previousChunk.end.position.x, 12f, previousChunk.end.position.z);
+                metersCount.textMesh.text = (100 * chunks.Count).ToString();
+            }
+
+            if (MaxChunkCount <= chunks.Count)
+            {
+                RoadLabel metersCount = Instantiate(Resources.Load<RoadLabel>("Texts/Finish"));
+                metersCount.transformRoadLabel.position = new Vector3(previousChunk.end.position.x, 12f, previousChunk.end.position.z);
+                metersCount.textMesh.text = "Finish";
+
+            }
         }
 
     }
@@ -63,6 +71,9 @@ public class RoadGenerator : MonoBehaviour
         currentChunk.gameObject.SetActive(true);
         previousChunk = currentChunk;
         previousChunk.gameObject.SetActive(true);
+        RoadLabel metersCount = Instantiate(Resources.Load<RoadLabel>("Texts/MetersCounter"));
+        metersCount.transformRoadLabel.position = new Vector3(previousChunk.end.position.x, 12f, previousChunk.end.position.z);
+        metersCount.textMesh.text = (100 * chunks.Count).ToString();
     }
 
     // private void PositionChunk(RoadChunk first, RoadChunk second)
