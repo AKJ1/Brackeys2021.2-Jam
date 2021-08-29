@@ -12,11 +12,14 @@ public class SwitchDestructable : MonoBehaviour
     public Transform WholeParent;
 
     public ParticleSystem CrashParticles;
+    public Action onCollisionEnter;
 
     private void OnCollisionEnter(Collision col)
     {
         if (col.transform.CompareTag("Player"))
         {
+            GameController.instance.DecreasePlayerSpeed();
+
             foreach (var point in col.contacts)
             {
                 var particles = Instantiate(CrashParticles.gameObject, point.point, quaternion.LookRotation(point.normal, Vector3.up));
@@ -25,6 +28,7 @@ public class SwitchDestructable : MonoBehaviour
             }
             FracturedParent.gameObject.SetActive(true);
             WholeParent.gameObject.SetActive(false);
+
         }
     }
 

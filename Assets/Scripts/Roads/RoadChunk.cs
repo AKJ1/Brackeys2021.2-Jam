@@ -8,9 +8,10 @@ public class RoadChunk : MonoBehaviour
     public Transform end;
     public Transform roadChunk;
     public Transform transformRoad;
+    public List<SwitchDestructable> destructables = new List<SwitchDestructable>();
+
     private MeshCollider roadMeshCollider;
-   
-    public int numPoints = 100;
+    public int numPoints = 20;
     private float boundingBoxScale = 1f;
     private Vector3 randomPoint;
     private Vector3 pointOnRoad = Vector3.zero;
@@ -18,15 +19,22 @@ public class RoadChunk : MonoBehaviour
     private int indexPoints = 0;
     private RaycastHit hit;
 
+
+    //private void Start()
+    //{
+    //    UpdateBuildings();
+    //}
+
     void OnEnable()
     {
         roadMeshCollider = transformRoad.GetComponent<MeshCollider>();
         GenerateRandomPositions();
+        //UpdateBuildings();
     }
 
     void GenerateRandomPositions()
     {
-        for (int i = 0; i < 200; i++)
+        for (int i = 0; i < 10; i++)
         {
             if (indexPoints >= numPoints)
             {
@@ -43,16 +51,19 @@ public class RoadChunk : MonoBehaviour
             if (pointFound)
             {
                 indexPoints++;
-                //Transform cubeTransform = Instantiate(Resources.Load<Transform>("Obstacles/Cube"));
-                //cubeTransform.position = pointOnRoad;
-                //cubeTransform.localScale = new Vector3(2f, 2f, 2f);
+                Transform cubeTransform = Instantiate(Resources.Load<Transform>("Obstacles/Sphere"));
+                cubeTransform.position = pointOnRoad;
+                cubeTransform.localScale = new Vector3(2f, 2f, 2f);
+                cubeTransform.GetComponent<Renderer>().material.color = new Color(Random.value, Random.value, Random.value);
                 //GameObject sphere = GameObject.CreatePrimitive((PrimitiveType)Random.Range(0, 3));
-                GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                sphere.transform.position = pointOnRoad;
-                sphere.transform.localScale = new Vector3(2f, 2f, 2f);
-                sphere.GetComponent<Renderer>().material.color = new Color(Random.value, Random.value, Random.value);
+                //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                //sphere.transform.position = pointOnRoad;
+                //sphere.transform.localScale = new Vector3(2f, 2f, 2f);
+                //sphere.GetComponent<Renderer>().material.color = new Color(Random.value, Random.value, Random.value);
             }
         }
+
+        
     }
 
     private void GetRandomPointOnColliderSurface(Vector3 point, Vector3 pointSurface)
@@ -77,9 +88,17 @@ public class RoadChunk : MonoBehaviour
         pointSurface = pointOnRoad;
     }
 
-    //public void AddBuildboard()
-    //{
-    //    Transform pos = Instantiate(Resources.Load<Transform>("Obstacles/Cube"));
-    //    pos.position = start.position;
-    //}
+    public void UpdateBuildings()
+    {
+        Debug.Log(destructables.Count);
+        if (destructables.Count != 0)
+        {
+            for (int i = 0; i < destructables.Count; i++)
+            {
+                Debug.Log(i);
+                destructables[i].onCollisionEnter = GameController.instance.DecreasePlayerSpeed;
+            }
+        }
+    }
+
 }

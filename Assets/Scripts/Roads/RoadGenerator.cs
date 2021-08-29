@@ -57,7 +57,7 @@ public class RoadGenerator : MonoBehaviour
     private void InitializeChunk()
     {
         currentChunk = Instantiate(Resources.Load<RoadChunk>("Road/TestRoad/4"));
-        chunks.Add(currentChunk);
+       
         var relativeMovement = transformPlayer.position - currentChunk.start.position;
         Bounds b = new Bounds();
         var allbounds = transformPlayer.GetComponentsInChildren<Renderer>().Select(r => r.bounds.size);
@@ -68,9 +68,10 @@ public class RoadGenerator : MonoBehaviour
         var playerOffset = new Vector3(0,b.size.y*1.5f,0);
         
         currentChunk.transform.position += relativeMovement - playerOffset; //new Vector3(absoluteMovement.x, 0, absoluteMovement.z);
-        currentChunk.gameObject.SetActive(true);
+        chunks.Add(currentChunk);
         previousChunk = currentChunk;
         previousChunk.gameObject.SetActive(true);
+        //previousChunk.UpdateBuildings();
         RoadLabel metersCount = Instantiate(Resources.Load<RoadLabel>("Texts/MetersCounter"));
         metersCount.transformRoadLabel.position = new Vector3(previousChunk.end.position.x, 12f, previousChunk.end.position.z);
         metersCount.textMesh.text = (100 * chunks.Count).ToString();
